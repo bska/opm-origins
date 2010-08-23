@@ -37,7 +37,7 @@
 #define OPENRS_RESERVOIRPROPERTYCOMMON_HEADER
 
 #include <dune/common/Units.hpp>
-#include <dune/grid/common/EclipseGridParser.hpp>
+#include <dune/common/EclipseGridParser.hpp>
 #include <dune/solvers/common/Matrix.hpp>
 
 namespace Dune

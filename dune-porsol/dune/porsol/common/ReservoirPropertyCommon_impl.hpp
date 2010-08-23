@@ -40,7 +40,7 @@
 #include <fstream>
 #include <boost/static_assert.hpp>
 #include <boost/array.hpp>
-#include <dune/grid/common/EclipseGridInspector.hpp>
+#include <dune/common/EclipseGridInspector.hpp>
 
 namespace Dune
 {
