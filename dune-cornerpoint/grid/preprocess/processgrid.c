@@ -384,7 +384,8 @@ args_ok(int nlhs, int nrhs, const mxArray *prhs[])
 {
     int ok;
 
-    ok = (nlhs == 1) && ((nrhs == 1) || (nrhs == 2));
+    ok = (nlhs == 0) || (nlhs == 1);
+    ok = ok && (nrhs == 1) || (nrhs == 2);
 
     ok = ok && !mxIsEmpty(prhs[0]);
     ok = ok && mxIsStruct(prhs[0]);
