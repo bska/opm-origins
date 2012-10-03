@@ -51,8 +51,8 @@ function varargout = processgrid_mex(varargin)
        
    INCLUDE = {};
    
-   OPTS = {'-output', ['processgrid_mex.', mexext], ...
-      '-largeArrayDims', ['-DMATLABVERSION=', v], '-g'};
+   OPTS = {'-output', 'processgrid_mex', ...
+           '-largeArrayDims', ['-DMATLABVERSION=', v], '-g'};
    
    buildmex(CFLAGS{:}, INCLUDE{:}, OPTS{:}, SRC{:})
 
