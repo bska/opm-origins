@@ -62,7 +62,6 @@ function G = mprocessGRDECL(grdecl, varargin)
    end
 
    G = processgrid_mex(grdecl,opt.Tolerance);
-   G.griddim = 3;
 
    if opt.CheckGrid,
       assert(all(diff(G.cells.facePos)>3));
@@ -74,7 +73,9 @@ function G = mprocessGRDECL(grdecl, varargin)
     G = splitDisconnectedGrid(G, false);   
    end
 
-   [ G(:).type ] = deal({ mfilename });
+   [ G(:).type    ] = deal({ mfilename });
+   [ G(:).griddim ] = deal(3);
+
  %{  
    if isfield(grdecl, 'MAPAXES'),
       for i = 1 : numel(G),
