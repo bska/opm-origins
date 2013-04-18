@@ -74,7 +74,7 @@ function G = mprocessGRDECL(grdecl, varargin)
     G = splitDisconnectedGrid(G, false);   
    end
 
-   G.type = { mfilename };
+   [ G(:).type ] = deal({ mfilename });
  %{  
    if isfield(grdecl, 'MAPAXES'),
       for i = 1 : numel(G),
