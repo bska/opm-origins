@@ -57,10 +57,9 @@ function G = mprocessGRDECL(grdecl, varargin)
    opt = merge_options(opt, varargin{:});
    
    if isfield(grdecl, 'ACTNUM'),
-         grdecl.ACTNUM  = int32(grdecl.ACTNUM);      
-   else
-       grdecl.ACTNUM = int32(ones(prod(grdecl.cartDims),1));
-   end    
+      grdecl.ACTNUM = int32(grdecl.ACTNUM);
+   end
+
    G = processgrid_mex(grdecl,opt.Tolerance);
    G.griddim = 3;
 
