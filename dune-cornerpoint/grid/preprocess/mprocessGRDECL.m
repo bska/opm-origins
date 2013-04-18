@@ -50,8 +50,9 @@ function G = mprocessGRDECL(grdecl, varargin)
 #COPYRIGHT#
 %}
 
-% $Date: 2012-01-27 11:03:23 +0100 (Fri, 27 Jan 2012) $
-% $Revision: 950 $
+% $Date$
+% $Revision$
+
    opt = struct('Verbose', mrstVerbose, 'Tolerance', 0.0, 'CheckGrid', true, ...
              'SplitDisconnected', true);
    opt = merge_options(opt, varargin{:});
