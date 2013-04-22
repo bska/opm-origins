@@ -86,28 +86,34 @@ function G = mprocessGRDECL(grdecl, varargin)
  %}
 end
 
+%--------------------------------------------------------------------------
+
 function G = splitDisconnectedGrid(G, verbose)
    % Check if grid is connected
-   ix = all(G.faces.neighbors~=0, 2);
-   I  = [G.faces.neighbors(ix,1);G.faces.neighbors(ix,2)];
-   J  = [G.faces.neighbors(ix,2);G.faces.neighbors(ix,1)];
-   N  = double(max(G.faces.neighbors(:)));
-   A  = sparse(double(I),double(J),1,N,N)+speye(N);
-   clear ix I J
-   [a,b,c,d]=dmperm(A);                                %#ok
-   clear A b d
-   if numel(c) > 2,
-      dispif(verbose, '\nGrid has %d disconnected components\n', ...
-         numel(c)-  1);
+   [a, c, c] = dmperm(adjacency(G));                                   %#ok
+
+   ncomp = numel(c) - 1;
+   if ncomp > 1,
+      dispif(verbose, '\nGrid has %d disconnected components\n', ncomp);
+
       % Partition grid into connected subgrids
-      for i = 1:numel(c) - 1,
-         g(i)  = extractSubgrid(G, a(c(i):c(i+1)-1));  %#ok
-         sz(i) = g(i).cells.num;                       %#ok
-         g(i).cartDims = G.cartDims;       %#ok
-      end
-      
-      % Return largest (in number of cells) grid first
-      [i,i] = sort(-sz);                                                 %#ok
-      G     = g(i);
+      g = arrayfun(@(i) extractSubgrid(G, a(c(i) : c(i + 1) - 1)), ...
+                   1 : ncomp, 'UniformOutput', false);
+
+      % Return grids in order of decreasing number of cells.
+      cartDims = G.cartDims;
+      [i, i]   = sort(- cellfun(@(g) g.cells.num, g));                 %#ok
+      G        = [ g{i} ];
+
+      [ G(:).cartDims ] = deal(cartDims);
    end
+end
+
+%--------------------------------------------------------------------------
+
+function A = adjacency(G)
+   N = double(G.faces.neighbors(~ any(G.faces.neighbors == 0, 2), :));
+   I = [ N(:,1) ; N(:,2) ; (1 : G.cells.num) .' ];
+   J = [ N(:,2) ; N(:,1) ; (1 : G.cells.num) .' ];
+   A = sparse(I, J, 1, G.cells.num, G.cells.num);
 end
