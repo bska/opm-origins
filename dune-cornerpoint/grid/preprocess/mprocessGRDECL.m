@@ -57,7 +57,9 @@ function G = mprocessGRDECL(grdecl, varargin)
              'SplitDisconnected', true);
    opt = merge_options(opt, varargin{:});
    
-   if isfield(grdecl, 'ACTNUM'),
+   if isfield(grdecl, 'ACTNUM') && ...
+         ~isa(grdecl.ACTNUM, 'int32'),
+
       grdecl.ACTNUM = int32(grdecl.ACTNUM);
    end
 
