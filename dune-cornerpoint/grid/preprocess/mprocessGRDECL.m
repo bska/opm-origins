@@ -91,9 +91,6 @@ function G = mprocessGRDECL(grdecl, varargin)
       end
    end
  %}
-   if(opt.SplitDisconnected)
-    G = splitDisconnectedGrid(G, false);   
-   end
 end
 
 %--------------------------------------------------------------------------
