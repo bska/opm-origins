@@ -53,22 +53,19 @@ function G = mprocessGRDECL(grdecl, varargin)
 % $Date$
 % $Revision$
 
-   opt = struct('Verbose', mrstVerbose, 'Tolerance', 0.0, 'CheckGrid', true, ...
-             'SplitDisconnected', true);
+   opt = struct('Verbose', mrstVerbose, 'Tolerance', 0.0, ...
+                'CheckGrid', true, 'SplitDisconnected', true);
    opt = merge_options(opt, varargin{:});
-   
 
    if isfield(grdecl, 'ACTNUM') && ...
          ~isa(grdecl.ACTNUM, 'int32'),
 
       grdecl.ACTNUM = int32(grdecl.ACTNUM);
    end
-   %    grdecl.ACTNUM = int32(ones(prod(grdecl.cartDims),1));
-   require mex/libgeometry
-   G = processgrid_mex(grdecl,opt.Tolerance);
 
-   G.griddim = 3;
-   
+   require mex/libgeometry
+
+   G = processgrid_mex(grdecl,opt.Tolerance);
 
    if opt.CheckGrid,
       assert(all(diff(G.cells.facePos)>3));
@@ -77,20 +74,20 @@ function G = mprocessGRDECL(grdecl, varargin)
    end
 
    if(opt.SplitDisconnected)
-    G = splitDisconnectedGrid(G, false);   
+    G = splitDisconnectedGrid(G, false);
    end
 
    [ G(:).type    ] = deal({ mfilename });
    [ G(:).griddim ] = deal(3);
 
- %{  
+%{
    if isfield(grdecl, 'MAPAXES'),
       for i = 1 : numel(G),
          G(i).nodes.coords(:,1:2) = ...
             mapAxes(G(i).nodes.coords(:,1:2), grdecl.MAPAXES);
       end
    end
- %}
+%}
 end
 
 %--------------------------------------------------------------------------
