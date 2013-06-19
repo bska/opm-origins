@@ -8,6 +8,6 @@ was hosted at
 
     http://public.ict.sintef.no/svn/openrs
 
-As of 2013-06-19, this repository is scheduled for removal.  The
+As of 2013-06-19, that repository is scheduled for removal.  The
 accumulated history of the repository is provided here mostly for
 reference.  We do not expect any future development in this repository.
